@@ -28,6 +28,7 @@ sudo apt install sed make binutils gcc g++ bash patch \
 Clone this repo and initialize the submodules:
 ```
 git clone https://github.com/mclewell/buildroot-Ox64
+cd buildroot-Ox64
 git submodule update --init
 ```
 
@@ -38,8 +39,12 @@ There are three patches that need to be applied.
 2. Disable stack pointer protection when building OpenSBI
 3. Increase the SPI flash partition size so our image will fit.
 
-These patches are in the [patches](/patches/) directory. The 
-[apply-patches.sh](/apply-patches.sh) script will automatically apply these for you.
+These patches are in the [patches](/patches/) directory.
+
+Run:
+```
+./apply-patches.sh
+```
 
 ## Build
 The BL808 contains three CPUs:
@@ -123,11 +128,15 @@ LED lights.
     - If you see handshake or read errors, check your UART0 connections on pins 
     1 and 2 or try reducing the baud rate.
 8. Switch to the "IOT" tab on the top. 
-9. Tick the "Enable" box under "Single Image Download". Set the following:
+9. Tick the "Enable" box under "Single Image Download". Set the following ([example screenshot](/doc/dev_cube_iot.png)):
     - In the first, shorter box, enter ```0xD2000``` as the load address
-    - Slect the output image that Buildroot built from ```images/whole_img_linux.bin``` ([example screenshot](/doc/dev_cube_iot.png)):
-    
-        Note: DevCube will first erase the region to be flashed and them load 
-        the image. This process will take a few minutes.
+    - Slect the output image that Buildroot built from ```images/whole_img_linux.bin``` 
+    - Note: DevCube will first erase the region to be flashed and them load the
+    image. This process will take a few minutes.
 10. Once complete, cycle power on the Ox64. UART3 (pins 31/32) will display the
 console output.
+
+
+**Note:** The M0/D0 bootloader images only need to be flashed once. When
+flashing the kernel/rootfs image in the second step, DevCube only erases the
+flash area for that image leaving the bootlader images intact. 
