@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_OX64_PATH/package/bl808-low-load/Config.in"

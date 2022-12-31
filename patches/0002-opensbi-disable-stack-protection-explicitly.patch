@@ -1,0 +1,27 @@
+From 94be442489f6a28e2f5fdb2078fe1849dedf797c Mon Sep 17 00:00:00 2001
+From: Matthew Clewell <matt@mattclewell.com>
+Date: Sat, 31 Dec 2022 09:39:44 -0600
+Subject: [PATCH] opensbi: disable stack protection explicitly
+
+Explicitly disable stack protection via the "-fno-stack-protector"
+compiler option. This allows the build to complete without linker
+errors in environments where stack protection is enabled by default.
+---
+ opensbi-0.6-808/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/opensbi-0.6-808/Makefile b/opensbi-0.6-808/Makefile
+index ccf8ea3db..efe18cbbe 100644
+--- a/opensbi-0.6-808/Makefile
++++ b/opensbi-0.6-808/Makefile
+@@ -175,6 +175,7 @@ CFLAGS		+=	$(GENFLAGS)
+ CFLAGS		+=	$(platform-cflags-y)
+ CFLAGS		+=	$(firmware-cflags-y)
+ CFLAGS		+=	-fno-pie -no-pie
++CFLAGS      +=  -fno-stack-protector
+ 
+ CPPFLAGS	+=	$(GENFLAGS)
+ CPPFLAGS	+=	$(platform-cppflags-y)
+-- 
+2.25.1
+

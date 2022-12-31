@@ -1,0 +1,8 @@
+[submodule "buildroot"]
+	path = buildroot
+	url = https://github.com/buildroot/buildroot
+    ignore = dirty
+[submodule "board/pine64/ox64/bl808_linux"]
+	path = board/pine64/ox64/bl808_linux
+	url = https://github.com/bouffalolab/bl808_linux
+    ignore = dirty

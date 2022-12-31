@@ -1,0 +1,34 @@
+From e8f7982194cf1c3a0866c998402cc480d09ddc2f Mon Sep 17 00:00:00 2001
+From: Matthew Clewell <matt@mattclewell.com>
+Date: Sat, 31 Dec 2022 11:54:15 -0600
+Subject: [PATCH] dts: increase rootfs mtd flash partition size
+
+---
+ bl808_dts/hw808c.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/bl808_dts/hw808c.dts b/bl808_dts/hw808c.dts
+index 1a093ef31..e1b28ac85 100755
+--- a/bl808_dts/hw808c.dts
++++ b/bl808_dts/hw808c.dts
+@@ -74,7 +74,7 @@
+ 
+ 		xip_flash@58500000 {
+ 				compatible = "mtd-rom";
+-				reg = <0x0 0x58500000 0x0 0x400000>;
++				reg = <0x0 0x58500000 0x0 0x00800000>;
+ 				linux,mtd-name = "xip-flash.0";
+ 				erase-size = <0x10000>;
+ 				bank-width = <4>;
+@@ -89,7 +89,7 @@
+ 
+ 				rootfs@0 {
+ 						label = "rootfs";
+-						reg = <0x00000 0x280000>;
++						reg = <0x00000 0x00800000>;
+ 						read-only;
+ 				};
+ 		};
+-- 
+2.25.1
+

@@ -1,0 +1,9 @@
+config BR2_PACKAGE_BL808_LOW_LOAD
+    bool "copy BL808 boot images to images dir"
+    help
+        Optional: copies pre-compiled boot images for the D0 and M0 harts
+        into the output images directory. These cannot be built with this
+        buildroot config as they require a different tool chain. See 
+        https://github.com/bouffalolab/bl808_linux/ for instructions on 
+        how to build these manaully.
+
