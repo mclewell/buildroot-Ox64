@@ -9,7 +9,7 @@ Flashing: UART0 on Pins 1 and 2
 
 Serial Console: UART3 on Pins 31 and 32
 
-![](/doc/Ox64pinout.png "Pine64 Ox64 Pinout"){width=75%}
+![](/doc/Ox64pinout.png "Pine64 Ox64 Pinout")
 
 ## Setup
 This repo leverages the BSP source from the [Bouffalo Labs Repo](https://github.com/bouffalolab/bl808_linux). The source for the Kernel, OpenSBI,
@@ -39,7 +39,7 @@ There are three patches that need to be applied.
 3. Increase the SPI flash partition size so our image will fit.
 
 These patches are in the [patches](/patches/) directory. The 
-```apply-patches.sh``` script will automatically apply these for you.
+[apply-patches.sh](/apply-patches.sh) script will automatically apply these for you.
 
 ## Build
 The BL808 contains three CPUs:
@@ -59,7 +59,8 @@ multiple toolchains. Therefore, these will need to be built separately. See the
 [Bouffalo Labs Repo](https://github.com/bouffalolab/bl808_linux). If you want to
 skip this step, I have provided pre-built boot-images in this repo. They will be 
 automatically copied to the output ```images``` directory after building the 
-main image.
+main image. They are also located in the 
+[bl808-low-load package](/package/bl808-low-load/src/) directory.
 
 ### Optional: Build the M0/D0 Boot Images
 Building these yourself is not difficult. Since we already have the source from 
@@ -100,15 +101,15 @@ for discussion and some suggested workarounds.
 Bouffalo Labs Dev Cube software is used to flash the board. It can be [downloaded from here](https://dev.bouffalolab.com/download).
 
 1. Download and extract Dev Cube
-2. Run ./BLDevCube-ubuntu (you might need to ```chmod +x``` it)
+2. Run ```./BLDevCube-ubuntu``` (you might need to ```chmod +x``` it)
 3. Select BL808 as the chip
-4. Change to the "MCU" tab on the top. Select the D0/M0 image that you build 
+4. Change to the "MCU" tab on the top. Select the D0/M0 image that you built 
 earlier (or the pre-built ones in the ```images``` directory). Set the following ([example screenshot](/doc/dev_cube_mcu.png)):
-    - MO: 
+    - M0: 
         - Group: group0
         - Image Addr: 0x58000000
         - Select low_load_bl808_m0.bin
-    - DO: 
+    - D0: 
         - Group: group1
         - Image Addr: 0x58000000
         - Select low_load_bl808_d0.bin
@@ -119,13 +120,14 @@ also decrease the baud rate from 2000000 if you have issues flashing.
 connecting power through the Micro-USB port. Release the button once the green 
 LED lights.
 7. Click "Create & Download" on the right. 
-    - If you see handshake or read errors, check your UART connections or try 
-    reducing the baud rate.
+    - If you see handshake or read errors, check your UART0 connections on pins 
+    1 and 2 or try reducing the baud rate.
 8. Switch to the "IOT" tab on the top. 
 9. Tick the "Enable" box under "Single Image Download". Set the following:
-10. In the first, shorter box, enter ```0xD2000``` as the load address and
-select the output image that Buildroot built from ```images/whole_img_linux.bin``` ([example screenshot](/doc/dev_cube_iot.png)):
-    - DevCube will first erase the region to be flashed and them load the image.
-    The process will take a few minutes.
-11. Once complete, cycle power on the Ox64. UART3 (pins 31/32) will display the
+    - In the first, shorter box, enter ```0xD2000``` as the load address
+    - Slect the output image that Buildroot built from ```images/whole_img_linux.bin``` ([example screenshot](/doc/dev_cube_iot.png)):
+    
+        Note: DevCube will first erase the region to be flashed and them load 
+        the image. This process will take a few minutes.
+10. Once complete, cycle power on the Ox64. UART3 (pins 31/32) will display the
 console output.
